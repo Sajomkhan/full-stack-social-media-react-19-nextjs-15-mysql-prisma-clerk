@@ -15,7 +15,7 @@ const FriendRequest = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Image
-            src="/postimage.jpg"
+            src="https://images.pexels.com/photos/927451/pexels-photo-927451.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
             width={40}
             height={40}
@@ -44,7 +44,7 @@ const FriendRequest = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Image
-            src="/postimage.jpg"
+            src="https://images.pexels.com/photos/415263/pexels-photo-415263.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
             width={40}
             height={40}
@@ -73,7 +73,7 @@ const FriendRequest = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Image
-            src="/postimage.jpg"
+            src="https://images.pexels.com/photos/819530/pexels-photo-819530.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
             width={40}
             height={40}

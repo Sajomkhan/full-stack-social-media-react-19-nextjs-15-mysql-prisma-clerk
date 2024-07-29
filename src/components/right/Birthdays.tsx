@@ -9,7 +9,7 @@ const Birthdays = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Image
-            src="/postimage.jpg"
+            src="https://images.pexels.com/photos/415263/pexels-photo-415263.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
             width={40}
             height={40}

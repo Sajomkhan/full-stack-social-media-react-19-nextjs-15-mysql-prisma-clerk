@@ -24,7 +24,7 @@ const Ad = ({ size }: { size: "sm" | "md" | "lg" }) => {
           }`}
         >
           <Image
-            src="/postimage.jpg"
+            src="https://images.pexels.com/photos/68507/spring-flowers-flowers-collage-floral-68507.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
             fill
             className="rounded-lg object-cover"

@@ -2,8 +2,16 @@ import Feed from "@/components/center/Feed"
 import LeftMenu from "@/components/left/LeftMenu"
 import ProfileImage from "@/components/profile/ProfileImage"
 import RihgtMenu from "@/components/right/RihgtMenu"
+import prisma from "@/lib/client"
 
-const ProfilePage = () => {
+const ProfilePage = async({params}:{params:{username: string}}) => {
+
+  const user = await prisma.user.findFirst({
+    where: {
+      username: params.username
+    }
+  })
+
   return (
     <div className="flex gap-6 pt-6">
     {/* =========LEFT========== */}

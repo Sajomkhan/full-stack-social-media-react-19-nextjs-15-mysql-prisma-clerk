@@ -16,7 +16,7 @@ datasource db {
 model User {
   id                    String          @id
   username              String          @unique
-  avater                String?
+  avatar                String?
   cover                 String?
   name                  String?
   surname               String?
