@@ -108,7 +108,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
         userId={user.id}
         currentUserId={currentUserId}
         isUserBlocked={isUserBlocked}
-        isUserFollowing={isFollowing}
+        isFollowing={isFollowing}
         isFollowingSent={isFollowingSent}
       />
     </div>
