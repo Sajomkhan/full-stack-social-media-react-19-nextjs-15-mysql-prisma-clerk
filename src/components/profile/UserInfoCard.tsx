@@ -68,7 +68,6 @@ const UserInfoCard = async ({ user }: { user: User }) => {
             ? `${user.name} ${user.surname}`
             : user.username}
         </span>
-        <span className="text-sm">{user.username}</span>
       </div>
       {user.discription && <p>{user.discription}</p>}
       {user.city && (
