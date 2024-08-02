@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import prisma from "./client";
 
+// FOLLOW ACTION
 export const switchFollow = async (userId: string) => {
   const { userId: currentUserId } = auth();
 
@@ -51,6 +52,7 @@ export const switchFollow = async (userId: string) => {
   }
 };
 
+// BLOCK ACTION
 export const switchBlock = async (userId: string) => {
   const { userId: currentUserId } = auth();
 

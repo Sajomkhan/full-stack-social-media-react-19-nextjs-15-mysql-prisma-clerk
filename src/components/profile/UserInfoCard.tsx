@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import UserInfoCardInteraction from "./UserInfoCardInteraction";
+import UpdateUser from "./UpdateUser";
 
 const UserInfoCard = async ({ user }: { user: User }) => {
   const createdAtDate = new Date(user.createdAt);
@@ -53,9 +54,13 @@ const UserInfoCard = async ({ user }: { user: User }) => {
         <span className="text-grey-500 font font-semibold">
           User Information
         </span>
-        <Link href="/" className="text-blue-500 text-xs">
-          See all
-        </Link>
+        {currentUserId === user.id ? (
+          <UpdateUser />
+        ) : (
+          <Link href="/" className="text-blue-500 text-xs">
+            See all
+          </Link>
+        )}
       </div>
       <div className="flex items-center gap-2">
         <span className="text-lg font-semibold">
@@ -104,13 +109,14 @@ const UserInfoCard = async ({ user }: { user: User }) => {
           <span>Joined {formattedDate}</span>
         </div>
       </div>
-      <UserInfoCardInteraction
-        userId={user.id}
-        currentUserId={currentUserId}
-        isUserBlocked={isUserBlocked}
-        isFollowing={isFollowing}
-        isFollowingSent={isFollowingSent}
-      />
+      {currentUserId && currentUserId !== user.id && (
+        <UserInfoCardInteraction
+          userId={user.id}
+          isUserBlocked={isUserBlocked}
+          isFollowing={isFollowing}
+          isFollowingSent={isFollowingSent}
+        />
+      )}
     </div>
   );
 };

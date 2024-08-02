@@ -70,7 +70,7 @@ const UserInfoCardInteraction = ({
       <form action={block} className="self-end ">
         <button>
           <span className="text-red-400 text-xs cursor-pointer">
-            {optimisticState.blocked ? "Unblock User" : "Block User"}
+            {optimisticState.blocked ? "Unblock" : "Block"}
           </span>
         </button>
       </form>
