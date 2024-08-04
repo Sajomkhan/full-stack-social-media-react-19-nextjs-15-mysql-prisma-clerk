@@ -1,7 +1,9 @@
 "use client";
 
+import { acceptFollowRequest, declineFollowRequest } from "@/lib/actions";
 import { FollowRequest, User } from "@prisma/client";
 import Image from "next/image";
+import { useOptimistic, useState } from "react";
 
 type followRequestsWithUser = FollowRequest & {
   sender: User;
@@ -12,11 +14,39 @@ export const FriendRequestList = ({
 }: {
   fetchFollowRequests: followRequestsWithUser[];
 }) => {
+  const [followRequestState, setFollowRequestState] =
+    useState(fetchFollowRequests);
+
+  const accept = async (followRequestId: number, userId: string) => {
+    removeOptimisticFollowRequest(followRequestId);
+    try {
+      await acceptFollowRequest(userId);
+      setFollowRequestState((prev) =>
+        prev.filter((req) => req.id !== followRequestId)
+      );
+    } catch (err) {}
+  };
+
+  const decline = async (followRequestId: number, userId: string) => {
+    removeOptimisticFollowRequest(followRequestId);
+    try {
+      await declineFollowRequest(userId);
+      setFollowRequestState((prev) =>
+        prev.filter((req) => req.id !== followRequestId)
+      );
+    } catch (err) {}
+  };
+
+  const [optimisticFollowRequest, removeOptimisticFollowRequest] =
+    useOptimistic(followRequestState, (state, value: number) =>
+      state.filter((req) => req.id !== value)
+    );
+
   if (!fetchFollowRequests) return null;
 
   return (
     <>
-      {fetchFollowRequests.map((request) => (
+      {optimisticFollowRequest.map((request) => (
         <div className="flex items-center justify-between" key={request.id}>
           <div className="flex items-center gap-4">
             <Image
@@ -33,7 +63,7 @@ export const FriendRequestList = ({
             </span>
           </div>
           <div className="flex gap-3 justify-end">
-            <form action="">
+            <form action={()=>accept(request.id, request.sender.id)}>
               <button>
                 <Image
                   src="/accept.png"
@@ -44,7 +74,7 @@ export const FriendRequestList = ({
                 />
               </button>
             </form>
-            <form action="">
+            <form action={()=>decline(request.id, request.sender.id)}>
               <button>
                 <Image
                   src="/reject.png"
