@@ -157,9 +157,6 @@ export const updateProfile = async (formData: FormData) => {
 
   const fields = Object.fromEntries(formData);
 
-  console.log(fields);
-  
-
   const Profile = z.object({
     cover: z.string().optional(),
     name: z.string().max(60).optional(),
