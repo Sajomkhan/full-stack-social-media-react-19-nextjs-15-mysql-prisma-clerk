@@ -17,6 +17,7 @@ export const FriendRequestList = ({
   const [followRequestState, setFollowRequestState] =
     useState(fetchFollowRequests);
 
+  // ACCEPT REQUEST
   const accept = async (followRequestId: number, userId: string) => {
     removeOptimisticFollowRequest(followRequestId);
     try {
@@ -27,6 +28,7 @@ export const FriendRequestList = ({
     } catch (err) {}
   };
 
+  // DECLINE REQUEST
   const decline = async (followRequestId: number, userId: string) => {
     removeOptimisticFollowRequest(followRequestId);
     try {
@@ -37,6 +39,7 @@ export const FriendRequestList = ({
     } catch (err) {}
   };
 
+  // USE OPTIMISTIC
   const [optimisticFollowRequest, removeOptimisticFollowRequest] =
     useOptimistic(followRequestState, (state, value: number) =>
       state.filter((req) => req.id !== value)
