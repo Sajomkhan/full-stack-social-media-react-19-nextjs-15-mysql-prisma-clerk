@@ -20,7 +20,7 @@ model User {
   cover                 String?
   name                  String?
   surname               String?
-  discription           String?
+  description           String?
   city                  String?
   school                String?
   work                  String?

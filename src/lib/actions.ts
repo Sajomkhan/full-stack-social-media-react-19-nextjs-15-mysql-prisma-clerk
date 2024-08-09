@@ -148,27 +148,48 @@ export const declineFollowRequest = async (userId: string) => {
   }
 };
 
-// export const updateProfile = async (formData: FormData) => {
+// export const updateProfile = async (formData: FormData, cover:string) => {
 //   const fields = Object.fromEntries(formData);
 //   // or // const name = formData.get("name") as string
+//   const fiendsWithCover = {cover, ...fields}
+
+
+//   const { userId } = auth();
+//   try {
+//     await prisma.user.update({
+//       where: {
+//         id: userId,
+//       },
+//       data: fiendsWithCover
+//     });
+//     return { success: false, error: true };
+//   } catch (err) {
+//     console.log(err);
+//     return { success: false, error: true };
+//   }
 // }
 
-export const updateProfile = async (formData: FormData) => {
+export const updateProfile = async (formData: FormData, cover:string) => {
 
   const fields = Object.fromEntries(formData);
+
+
+  const filteredFields = Object.fromEntries(
+    Object.entries(fields).filter(([_, value]) => value !== "")
+  );
 
   const Profile = z.object({
     cover: z.string().optional(),
     name: z.string().max(60).optional(),
     surname: z.string().max(60).optional(),
-    discription: z.string().max(255).optional(),
+    description: z.string().max(255).optional(),
     city: z.string().max(60).optional(),
     school: z.string().max(60).optional(),
     work: z.string().max(60).optional(),
     website: z.string().max(60).optional(),
   });
 
-  const validatedField = Profile.safeParse(fields);
+  const validatedField = Profile.safeParse({cover, ...filteredFields});
 
   if (!validatedField.success) {
     console.log(validatedField.error.flatten().fieldErrors);
@@ -188,7 +209,7 @@ export const updateProfile = async (formData: FormData) => {
       },
       data: validatedField.data,
     });
-    return { success: false, error: true };
+    return { success: true, error: false };
   } catch (err) {
     console.log(err);
     return { success: false, error: true };
