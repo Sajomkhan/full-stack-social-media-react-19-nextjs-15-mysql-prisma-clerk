@@ -4,11 +4,16 @@ import { updateProfile } from "@/lib/actions";
 import { User } from "@prisma/client";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UpdateUser = ({ user }: { user: User }) => {
   const [toggle, setToggle] = useState(false);
-  const [cover, setCover] = useState<any>()
+  const [cover, setCover] = useState<any>();
+  const [displayCoverImage, setDisplayCoverImage] = useState<string>("");
+
+  useEffect(()=>{
+    setDisplayCoverImage(cover?.secure_url || user.cover || "/noCover.png")
+  },[cover])
 
   const handleClose = () => {
     setToggle(false);
@@ -25,7 +30,7 @@ const UpdateUser = ({ user }: { user: User }) => {
       {toggle && (
         <div className="fixed w-screen min-h-screen top-0 left-0 bg-black bg-opacity-65 flex items-center justify-center z-50">
           <form
-            action={(formData)=>updateProfile(formData, cover?.secure_url)}
+            action={(formData) => updateProfile(formData, cover?.secure_url)}
             className="p-12 bg-white rounded-lg shadow-md flex flex-col w-1/3 relative"
           >
             {/* TITLE */}
@@ -34,15 +39,20 @@ const UpdateUser = ({ user }: { user: User }) => {
               Use the navbar profile to change the avatar or username.
             </div>
             {/* COVER PIC UPLOAD IN CLOUDINARY */}
-            <CldUploadWidget uploadPreset="social" onSuccess={(result)=> setCover(result.info)
-            }>
+            <CldUploadWidget
+              uploadPreset="social"
+              onSuccess={(result) => setCover(result.info)}
+            >
               {({ open }) => {
                 return (
-                  <div className="flex flex-col gap-2 my-4" onClick={()=>open()}>
+                  <div
+                    className="flex flex-col gap-2 my-4"
+                    onClick={() => open()}
+                  >
                     <label htmlFor="">Cover Picture</label>
                     <div className="flex items-center gap-4 cursor-pointer">
                       <Image
-                        src={user.cover || "/noCover.png"}
+                        src={displayCoverImage}
                         alt=""
                         width={60}
                         height={40}
