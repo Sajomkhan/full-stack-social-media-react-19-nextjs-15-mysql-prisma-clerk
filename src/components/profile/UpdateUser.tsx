@@ -6,6 +6,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
+import UpdateButton from "../right/UpdateButton";
 
 const UpdateUser = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -175,12 +176,10 @@ const UpdateUser = ({ user }: { user: User }) => {
               <span className="text-green-500 mt-3">Profile has been updated!</span>
             )}
             {state.error && (
-              <span className="text-red-500">Something went wrong!</span>
+              <span className="text-red-500 mt-3">Something went wrong!</span>
             )}
             {/* Update Button */}
-            <button className="bg-blue-600 text-white cursor-pointer mt-3 p-2">
-              Update
-            </button>
+            <UpdateButton />
             <div
               className="absolute top-2 right-3 text-xl text-red-500 cursor-pointer p-2"
               onClick={handleClose}
