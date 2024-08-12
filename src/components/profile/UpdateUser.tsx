@@ -4,20 +4,34 @@ import { updateProfile } from "@/lib/actions";
 import { User } from "@prisma/client";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 
 const UpdateUser = ({ user }: { user: User }) => {
+  const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const [cover, setCover] = useState<any>();
   const [displayCoverImage, setDisplayCoverImage] = useState<string>("");
 
-  useEffect(()=>{
-    setDisplayCoverImage(cover?.secure_url || user.cover || "/noCover.png")
-  },[cover])
+
+  useEffect(() => {
+    setDisplayCoverImage(cover?.secure_url || user.cover || "/noCover.png");
+  }, [cover]);
 
   const handleClose = () => {
     setToggle(false);
   };
+
+  const [state, formAction] = useActionState(updateProfile, {
+    success: false,
+    error: false,
+  });
+
+  useEffect(() => {
+    state.success && router.refresh();
+    setToggle(false);
+    state.success && router.refresh();
+  }, [state.success]);
 
   return (
     <div>
@@ -30,7 +44,9 @@ const UpdateUser = ({ user }: { user: User }) => {
       {toggle && (
         <div className="fixed w-screen min-h-screen top-0 left-0 bg-black bg-opacity-65 flex items-center justify-center z-50">
           <form
-            action={(formData) => updateProfile(formData, cover?.secure_url)}
+            action={(formData) =>
+              formAction({ formData, cover: cover?.secure_url || "" })
+            }
             className="p-12 bg-white rounded-lg shadow-md flex flex-col w-1/3 relative"
           >
             {/* TITLE */}
@@ -72,7 +88,7 @@ const UpdateUser = ({ user }: { user: User }) => {
               {/* INPUT */}
               <div className="flex flex-col gap-2">
                 <label htmlFor="" className="text-xs text-gray-500">
-                  First Name
+                  Name
                 </label>
                 <input
                   type="text"
@@ -154,7 +170,15 @@ const UpdateUser = ({ user }: { user: User }) => {
                 />
               </div>
             </div>
-            <button className="bg-blue-600 text-white cursor-pointer mt-7 p-2">
+            {/* Success or Error Desplay */}
+            {state.success && (
+              <span className="text-green-500 mt-3">Profile has been updated!</span>
+            )}
+            {state.error && (
+              <span className="text-red-500">Something went wrong!</span>
+            )}
+            {/* Update Button */}
+            <button className="bg-blue-600 text-white cursor-pointer mt-3 p-2">
               Update
             </button>
             <div

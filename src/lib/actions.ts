@@ -153,7 +153,6 @@ export const declineFollowRequest = async (userId: string) => {
 //   // or // const name = formData.get("name") as string
 //   const fiendsWithCover = {cover, ...fields}
 
-
 //   const { userId } = auth();
 //   try {
 //     await prisma.user.update({
@@ -169,10 +168,12 @@ export const declineFollowRequest = async (userId: string) => {
 //   }
 // }
 
-export const updateProfile = async (formData: FormData, cover:string) => {
-
+export const updateProfile = async (
+  errorOrSuccess: { success: boolean; error: boolean },
+  formState: { formData: FormData; cover: string }
+) => {
+  const {formData, cover} = formState
   const fields = Object.fromEntries(formData);
-
 
   const filteredFields = Object.fromEntries(
     Object.entries(fields).filter(([_, value]) => value !== "")
@@ -189,7 +190,7 @@ export const updateProfile = async (formData: FormData, cover:string) => {
     website: z.string().max(60).optional(),
   });
 
-  const validatedField = Profile.safeParse({cover, ...filteredFields});
+  const validatedField = Profile.safeParse({ cover, ...filteredFields });
 
   if (!validatedField.success) {
     console.log(validatedField.error.flatten().fieldErrors);
