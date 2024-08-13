@@ -1,5 +1,5 @@
 import AddPost from "@/components/center/AddPost";
-import Post from "@/components/center/Post";
+import Feed from "@/components/center/Feed";
 import Stories from "@/components/center/Stories";
 import LeftMenu from "@/components/left/LeftMenu";
 import RihgtMenu from "@/components/right/RihgtMenu";
@@ -16,13 +16,7 @@ const Homepage = () => {
         <div className="flex flex-col gap-4">
           <Stories />
           <AddPost />
-          <div className="p-4 bg-white shadow-md rounded-lg flex flex-col gap-6">
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-          </div>
+          <Feed />
         </div>
       </div>
       {/* =========RIGHT========== */}

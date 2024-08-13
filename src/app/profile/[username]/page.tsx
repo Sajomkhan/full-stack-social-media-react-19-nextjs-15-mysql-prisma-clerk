@@ -1,4 +1,4 @@
-import Post from "@/components/center/Post";
+import Feed from "@/components/center/Feed";
 import LeftMenu from "@/components/left/LeftMenu";
 import ProfileImage from "@/components/profile/ProfileImage";
 import RihgtMenu from "@/components/right/RihgtMenu";
@@ -56,11 +56,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
           <ProfileImage user={user}/>
-          <div className="p-4 bg-white shadow-md rounded-lg flex flex-col gap-6">
-            <Post />
-            <Post />
-            <Post />
-          </div>
+          <Feed username={user.name}/>
         </div>
       </div>
       {/* =========RIGHT========== */}
