@@ -6,7 +6,7 @@ import prisma from "@/lib/client";
 const Feed = async ({ username }: { username?: string | null }) => {
   const { userId } = auth();
 
-  let posts;
+  let posts: any[] = [];
 
   if (username) {
     posts = await prisma.post.findMany({
@@ -43,19 +43,39 @@ const Feed = async ({ username }: { username?: string | null }) => {
         followingId: true,
       },
     });
-    
-    const followings = following.map(f=>f.followingId)
-    
-    console.log(followings);    
+
+    const followings = following.map((f) => f.followingId);
+
+    posts = await prisma.post.findMany({
+      where: {
+        userId: {
+          in: followings,
+        },
+      },
+      include: {
+        user: true,
+        likes: {
+          select: {
+            userId: true,
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
+      },
+      orderBy: {
+        cratedAt: "desc",
+      },
+    });
   }
 
   return (
     <div className="p-4 bg-white shadow-md rounded-lg flex flex-col gap-6">
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      {posts.length
+        ? posts.map((post) => <Post key={post.id} post={post} />)
+        : "No posts found"}
     </div>
   );
 };
