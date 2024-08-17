@@ -51,7 +51,7 @@ const Post = ({ post }: { post: PostType }) => {
         likes={post.likes.map((like)=>like.userId)}
         commentsNumber={post._count.comments}
       />
-      <Comments />
+      <Comments postId={post.id}/>
     </div>
   );
 };
