@@ -1,10 +1,9 @@
 import prisma from "@/lib/client";
-import Image from "next/image";
 import CommentList from "./CommentList";
 
 const Comments = async({postId}: {postId: number}) => {
 
-  const comments = await prisma.comment.findFirst({
+  const comments = await prisma.comment.findMany({
     where:{
       postId
     },
@@ -12,11 +11,12 @@ const Comments = async({postId}: {postId: number}) => {
       user:true
     }
   })
+ 
 
   return (
     <div className="text-sm">
       {/* =========WRITE COMMNET======== */}
-      <CommentList comments = {comments} postId={postId} />
+      <CommentList comments={comments} postId={postId}/>
     </div>
   );
 };

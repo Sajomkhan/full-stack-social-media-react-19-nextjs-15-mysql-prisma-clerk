@@ -172,7 +172,7 @@ export const updateProfile = async (
   errorOrSuccess: { success: boolean; error: boolean },
   formState: { formData: FormData; cover: string }
 ) => {
-  const {formData, cover} = formState
+  const { formData, cover } = formState;
   const fields = Object.fromEntries(formData);
 
   const filteredFields = Object.fromEntries(
@@ -217,37 +217,58 @@ export const updateProfile = async (
   }
 };
 
+export const switchLike = async (postId: number) => {
+  const { userId } = auth();
 
-export const switchLike = async(postId: number) => {
-  const {userId} = auth()
+  if (!userId) throw new Error("User is not authenticated");
 
-  if(!userId) throw new Error("User is not authenticated")
+  try {
+    const existingLike = await prisma.like.findFirst({
+      where: {
+        postId,
+        userId,
+      },
+    });
 
-    try {
-      const existingLike = await prisma.like.findFirst({
-        where:{
+    if (existingLike) {
+      await prisma.like.delete({
+        where: {
+          id: existingLike.id,
+        },
+      });
+    } else {
+      await prisma.like.create({
+        data: {
           postId,
-          userId
-        }
-      })
-
-      if(existingLike){
-        await prisma.like.delete({
-          where:{
-            id:existingLike.id
-          }
-        })
-      }else{
-        await prisma.like.create({
-          data:{
-            postId,
-            userId
-          }
-        })
-      }
-      
-    } catch (err) {
-      console.log(err);
-      throw new Error("Something went wrong")      
+          userId,
+        },
+      });
     }
-}
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong");
+  }
+};
+
+export const addComment = async (postId: number, desc: string) => {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("User is not authenticated");
+
+  try {
+    const newComment = await prisma.comment.create({
+      data: {
+        desc,
+        userId,
+        postId,
+      },
+      include: {
+        user: true,
+      },
+    });
+    return newComment
+  } catch (err) {
+    console.log(err);
+    throw new Error("Something went wrong")
+  }
+};

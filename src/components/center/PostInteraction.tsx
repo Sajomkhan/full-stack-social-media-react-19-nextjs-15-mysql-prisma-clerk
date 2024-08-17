@@ -74,7 +74,7 @@ const PostInteraction = ({
           />
           <span className="text-gray-300">|</span>
           <span className="text-gray-500">
-            24 <span className="hidden md:inline"> Comments</span>
+            {commentsNumber} <span className="hidden md:inline"> Comments</span>
           </span>
         </div>
       </div>
