@@ -29,7 +29,7 @@ const Feed = async ({ username }: { username?: string | null }) => {
         },
       },
       orderBy: {
-        cratedAt: "desc",
+        createdAt: "desc",
       },
     });
   }
@@ -67,7 +67,7 @@ const Feed = async ({ username }: { username?: string | null }) => {
         },
       },
       orderBy: {
-        cratedAt: "desc",
+        createdAt: "desc",
       },
     });
   }
