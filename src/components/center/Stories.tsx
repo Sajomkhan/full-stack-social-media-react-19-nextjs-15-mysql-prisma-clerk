@@ -42,9 +42,7 @@ const Stories = async() => {
       user: true
     }
   })
-
-  console.log(stories);
-  
+ 
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md overflow-scroll text-sm scrollbar-hide">
