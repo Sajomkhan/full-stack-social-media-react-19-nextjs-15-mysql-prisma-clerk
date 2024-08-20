@@ -30,7 +30,10 @@ const AddPost = () => {
       {/* =======TEXT POST========= */}
       <div className="flex-1">
         {/* TEXT INPUT */}
-        <form action={(formData)=>addPost(formData, img?.secure_url)} className="flex gap-4">
+        <form
+          action={(formData) => addPost(formData, img?.secure_url)}
+          className="flex gap-4"
+        >
           <textarea
             placeholder="What's on your mind?"
             className="flex-1 bg-slate-100 rounded-lg py-2 px-4"
@@ -48,6 +51,7 @@ const AddPost = () => {
         </form>
         {/* POST OPTIONS */}
         <div className="flex items-center gap-3 md:gap-7 flex-wrap mt-4 text-gray-400 text-xs md:text-sm">
+          {/* CLAUDINARY WIDGET */}
           <CldUploadWidget
             uploadPreset="social"
             onSuccess={(result, { widget }) => {

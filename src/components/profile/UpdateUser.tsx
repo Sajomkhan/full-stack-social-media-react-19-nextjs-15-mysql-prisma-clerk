@@ -14,7 +14,6 @@ const UpdateUser = ({ user }: { user: User }) => {
   const [cover, setCover] = useState<any>();
   const [displayCoverImage, setDisplayCoverImage] = useState<string>("");
 
-
   useEffect(() => {
     setDisplayCoverImage(cover?.secure_url || user.cover || "/noCover.png");
   }, [cover]);
@@ -55,7 +54,7 @@ const UpdateUser = ({ user }: { user: User }) => {
             <div className="mt-4 text-xs text-gray-500">
               Use the navbar profile to change the avatar or username.
             </div>
-            {/* COVER PIC UPLOAD IN CLOUDINARY */}
+            {/* CLAUDINARY WIDGET */}
             <CldUploadWidget
               uploadPreset="social"
               onSuccess={(result) => setCover(result.info)}
@@ -173,7 +172,9 @@ const UpdateUser = ({ user }: { user: User }) => {
             </div>
             {/* Success or Error Desplay */}
             {state.success && (
-              <span className="text-green-500 mt-3">Profile has been updated!</span>
+              <span className="text-green-500 mt-3">
+                Profile has been updated!
+              </span>
             )}
             {state.error && (
               <span className="text-red-500 mt-3">Something went wrong!</span>
