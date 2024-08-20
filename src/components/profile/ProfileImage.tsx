@@ -1,21 +1,12 @@
+import { User } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 
-export type User = {
-  id: string;
-  username: string;
-  avatar: string | null;
-  cover?: string | null;
-  name?: string | null;
-  surname?: string | null;
+type userType = User & {
   _count: { followers: number; followings: number; posts: number };
-};
-
-interface IUser {
-  user: User;
 }
 
-const ProfileImage: React.FC<IUser> = ({ user }) => {
+const ProfileImage = ({ user }:{user:userType}) => {
 
   return (
     <div className="flex flex-col gap-6 bg-white shadow-md rounded-lg text-sm p-8">
@@ -47,11 +38,11 @@ const ProfileImage: React.FC<IUser> = ({ user }) => {
           </div>
           <div className="flex flex-col gap-1 items-center">
             <span>{user._count.followers}</span>
-            <span>Followers</span>
+            <span>Following</span>
           </div>
           <div className="flex flex-col gap-1 items-center">
             <span>{user._count.followings}</span>
-            <span>Following</span>
+            <span>Followers</span>
           </div>
         </div>
       </div>

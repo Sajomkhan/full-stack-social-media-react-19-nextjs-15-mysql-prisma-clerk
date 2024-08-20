@@ -56,7 +56,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
           <ProfileImage user={user}/>
-          <Feed username={user.name}/>
+          <Feed username={user.username}/>
         </div>
       </div>
       {/* =========RIGHT========== */}

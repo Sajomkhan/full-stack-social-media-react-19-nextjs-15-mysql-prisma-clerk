@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -42,7 +37,7 @@ model Post {
   id        Int       @id @default(autoincrement())
   desc      String
   img       String?
-  cratedAt  DateTime  @default(now())
+  createdAt  DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
@@ -53,7 +48,7 @@ model Post {
 model Comment {
   id        Int      @id @default(autoincrement())
   desc      String
-  cratedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
@@ -64,7 +59,7 @@ model Comment {
 
 model Like {
   id        Int      @id @default(autoincrement())
-  cratedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -75,7 +70,7 @@ model Like {
 
 model Follower {
   id          Int      @id @default(autoincrement())
-  cratedAt    DateTime @default(now())
+  createdAt    DateTime @default(now())
   follower    User     @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
   followerId  String
   following   User     @relation("UserFollowings", fields: [followingId], references: [id], onDelete: Cascade)
@@ -84,7 +79,7 @@ model Follower {
 
 model FollowRequest {
   id        Int      @id @default(autoincrement())
-  cratedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   sender    User     @relation("FollowRequestSent", fields: [senderId], references: [id], onDelete: Cascade)
   senderId  String
   reciver   User     @relation("FollowRequestReceived", fields: [reciverId], references: [id], onDelete: Cascade)
@@ -95,7 +90,7 @@ model FollowRequest {
 
 model Block {
   id        Int      @id @default(autoincrement())
-  cratedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   blocker   User     @relation("BlocksSent", fields: [blockerId], references: [id], onDelete: Cascade)
   blockerId String
   blocked   User     @relation("BlocksReceived", fields: [blockedId], references: [id], onDelete: Cascade)
@@ -107,8 +102,110 @@ model Block {
 model Story {
   id        Int      @id @default(autoincrement())
   img       String?
-  cratedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @unique
 }
+
+
+// // FOR MONGODB MODEL
+// model User {
+//   id                    String          @id @default(auto()) @map("_id") 
+//   username              String          @unique
+//   avatar                String?
+//   cover                 String?
+//   name                  String?
+//   surname               String?
+//   description           String?
+//   city                  String?
+//   school                String?
+//   work                  String?
+//   website               String?
+//   createdAt             DateTime        @default(now())
+//   posts                 Post[]          @relation("UserPosts")
+//   comments              Comment[]       @relation("UserComments")
+//   likes                 Like[]          @relation("UserLikes")
+//   followers             Follower[]      @relation("UserFollowers")
+//   followings            Follower[]      @relation("UserFollowings")
+//   followReqeustSent     FollowRequest[] @relation("FollowRequestSent")
+//   followReqeustReceived FollowRequest[] @relation("FollowRequestReceived")
+//   blocks                Block[]         @relation("BlocksSent")
+//   blockedBy             Block[]         @relation("BlocksReceived")
+//   stories               Story[]         @relation("UserStories")
+// }
+
+// model Post {
+//   id        String    @id @default(auto()) @map("_id")
+//   desc      String
+//   img       String?
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+//   user      User      @relation("UserPosts", fields: [userId], references: [id])
+//   userId    String
+//   comments  Comment[] @relation("PostComments")
+//   likes     Like[]    @relation("PostLikes")
+// }
+
+// model Comment {
+//   id        String    @id @default(auto()) @map("_id")
+//   desc      String
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+//   user      User      @relation("UserComments", fields: [userId], references: [id])
+//   userId    String
+//   post      Post      @relation("PostComments", fields: [postId], references: [id])
+//   postId    String
+//   likes     Like[]    @relation("CommentLikes")
+// }
+
+// model Like {
+//   id        String    @id @default(auto()) @map("_id")
+//   createdAt DateTime  @default(now())
+//   user      User      @relation("UserLikes", fields: [userId], references: [id])
+//   userId    String
+//   post      Post?     @relation("PostLikes", fields: [postId], references: [id])
+//   postId    String?
+//   Comment   Comment?  @relation("CommentLikes", fields: [commentId], references: [id])
+//   commentId String?
+// }
+
+// model Follower {
+//   id          String    @id @default(auto()) @map("_id")
+//   createdAt   DateTime  @default(now())
+//   follower    User      @relation("UserFollowers", fields: [followerId], references: [id])
+//   followerId  String
+//   following   User      @relation("UserFollowings", fields: [followingId], references: [id])
+//   followingId String
+// }
+
+// model FollowRequest {
+//   id        String    @id @default(auto()) @map("_id")
+//   createdAt DateTime  @default(now())
+//   sender    User      @relation("FollowRequestSent", fields: [senderId], references: [id])
+//   senderId  String
+//   reciver   User      @relation("FollowRequestReceived", fields: [reciverId], references: [id])
+//   reciverId String
+
+//   @@unique([senderId, reciverId])
+// }
+
+// model Block {
+//   id        String    @id @default(auto()) @map("_id")
+//   createdAt DateTime  @default(now())
+//   blocker   User      @relation("BlocksSent", fields: [blockerId], references: [id])
+//   blockerId String
+//   blocked   User      @relation("BlocksReceived", fields: [blockedId], references: [id])
+//   blockedId String
+
+//   @@unique([blockerId, blockedId])
+// }
+
+// model Story {
+//   id        String    @id @default(auto()) @map("_id")
+//   img       String?
+//   createdAt DateTime  @default(now())
+//   expiresAt DateTime
+//   user      User      @relation("UserStories", fields: [userId], references: [id])
+//   userId    String    @unique
+// }

@@ -24,7 +24,7 @@ const CommentList = ({
     addOptimisticComment({
       id: Math.random(),
       desc,
-      cratedAt: new Date(Date.now()),
+      createdAt: new Date(Date.now()),
       updatedAt: new Date(Date.now()),
       userId: user.id,
       postId: postId,
