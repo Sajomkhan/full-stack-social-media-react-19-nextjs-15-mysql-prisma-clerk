@@ -8,8 +8,6 @@ type userType = User & {
 
 const ProfileImage = ({ user }:{user:userType}) => {
 
-  console.log(user);  
-
   return (
     <div className="flex flex-col gap-6 bg-white shadow-md rounded-lg text-sm p-8">
       <div className="h-64 relative">
@@ -40,11 +38,11 @@ const ProfileImage = ({ user }:{user:userType}) => {
           </div>
           <div className="flex flex-col gap-1 items-center">
             <span>{user._count.followers}</span>
-            <span>Followers</span>
+            <span>Following</span>
           </div>
           <div className="flex flex-col gap-1 items-center">
             <span>{user._count.followings}</span>
-            <span>Following</span>
+            <span>Followers</span>
           </div>
         </div>
       </div>

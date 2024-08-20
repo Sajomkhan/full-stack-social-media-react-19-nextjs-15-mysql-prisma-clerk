@@ -35,22 +35,18 @@ const Feed = async ({ username }: { username?: string | null }) => {
   }
 
   if (!username && userId) {
-    const following = await prisma.follower.findMany({
+    const followings = await prisma.follower.findMany({
       where: {
-        followerId: userId,
-      },
-      select: {
-        followingId: true,
+        OR: [{ followingId: userId }, { followerId: userId }],
       },
     });
 
-    const followings = following.map((f) => f.followingId);
-    followings.push(userId)
+    const userIdForDisplayPost = followings.map((f) => f.followerId);
 
     posts = await prisma.post.findMany({
       where: {
         userId: {
-          in: followings,
+          in: userIdForDisplayPost,
         },
       },
       include: {
