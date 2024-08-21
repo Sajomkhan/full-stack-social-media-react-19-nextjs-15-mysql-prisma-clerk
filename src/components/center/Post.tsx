@@ -2,6 +2,9 @@ import Image from "next/image";
 import Comments from "./Comments";
 import { Post as PostSchema, User } from "@prisma/client";
 import PostInteraction from "./PostInteraction";
+import { Suspense } from "react";
+import Postinfo from "./PostInfo";
+import { auth } from "@clerk/nextjs/server";
 
 type PostType = PostSchema & { user: User } & {
   likes: [{ userId: string }];
@@ -10,7 +13,7 @@ type PostType = PostSchema & { user: User } & {
 };
 
 const Post = ({ post }: { post: PostType }) => {
-
+  const {userId}=auth()
   return (
     <div className="flex flex-col gap-4 border-b-8 border-slate-100 pb-4">
       {/* ==========USER========= */}
@@ -29,7 +32,7 @@ const Post = ({ post }: { post: PostType }) => {
               : post.user.username}
           </span>
         </div>
-        <Image src="/more.png" alt="" width={16} height={16} />
+        {userId === post.user.id && <Postinfo postId={post.id}/> }
       </div>
       {/* ==========DESC========= */}
       <div className="flex flex-col gap-4">
@@ -46,12 +49,16 @@ const Post = ({ post }: { post: PostType }) => {
         <p>{post.desc}</p>
       </div>
       {/* ==========INTERACTION========= */}
-      <PostInteraction
-        postId={post.id}
-        likes={post.likes.map((like)=>like.userId)}
-        commentsNumber={post._count.comments}
-      />
-      <Comments postId={post.id}/>
+      <Suspense fallback="Loading...">
+        <PostInteraction
+          postId={post.id}
+          likes={post.likes.map((like) => like.userId)}
+          commentsNumber={post._count.comments}
+        />
+      </Suspense>
+      <Suspense fallback="Loading...">
+        <Comments postId={post.id} />
+      </Suspense>
     </div>
   );
 };
