@@ -34,6 +34,16 @@ const AddPost = () => {
           action={(formData) => addPost(formData, img?.secure_url)}
           className="flex gap-4"
         >
+          {img && (
+            <div className="w-16 min-h-18 relative">
+              <Image
+                src={img?.secure_url}
+                alt=""
+                fill
+                className="object-cover rounded-md"
+              />
+            </div>
+          )}
           <textarea
             placeholder="What's on your mind?"
             className="flex-1 bg-slate-100 rounded-lg py-2 px-4"
