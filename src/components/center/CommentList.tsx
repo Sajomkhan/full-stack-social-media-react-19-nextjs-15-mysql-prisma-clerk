@@ -115,7 +115,7 @@ const CommentList = ({
                   className="cussor-pointer w-3 h-3"
                 />
                 <span className="text-gray-300">|</span>
-                <span className="text-gray-500">23 Likes</span>
+                <span className="text-gray-500">0 Likes</span>
               </div>
               <div className="bg-slate-100 py-0.5 px-2 rounded-md">Reply</div>
             </div>

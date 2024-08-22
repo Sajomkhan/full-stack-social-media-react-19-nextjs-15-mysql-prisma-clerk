@@ -13,3 +13,11 @@
 input, textarea:focus{
   outline: none;
 }
+
+
+@layer base {
+  button {
+    @apply cursor-pointer hover:bg-blue-600 hover:text-white hover:transition-all ease-linear duration-300
+  }
+
+}

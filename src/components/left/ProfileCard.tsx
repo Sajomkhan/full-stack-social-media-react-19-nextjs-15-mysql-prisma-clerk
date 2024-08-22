@@ -56,7 +56,7 @@ const ProfileCard = async () => {
           />
           <span>{user._count.followers} Followers</span>
         </div>
-        <Link href={`/profile/${user.username}`} className="bg-blue-500 text-white text-xs py-1 rounded-md px-3">
+        <Link href={`/profile/${user.username}`} className="bg-blue-500 text-white text-xs py-1 rounded-md px-3 hover:bg-blue-600">
           My Profile
         </Link>
       </div>
