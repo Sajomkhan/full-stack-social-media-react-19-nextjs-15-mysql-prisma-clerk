@@ -34,7 +34,7 @@ const AddPost = () => {
           action={(formData) => addPost(formData, img?.secure_url)}
           className="flex gap-4"
         >
-          {img && (
+          {img?.secure_url && (
             <div className="w-16 min-h-18 relative">
               <Image
                 src={img?.secure_url}
